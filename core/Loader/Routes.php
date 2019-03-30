@@ -7,8 +7,9 @@
      */
     
     namespace Core\Loader;
+    use Core\Loader\Config;
     
-  //  use App\Controllers\IndexController;
+    use Exeption;
     
     class Routes
     {

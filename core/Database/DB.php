@@ -47,4 +47,21 @@
                 return [];
             }
         }
+        
+        public function raw($query)
+        {
+            if ( !is_null($query)) {
+                $this -> query = $query;
+                
+                return $this;
+            }
+        }
+        public function addRaw($query)
+        {
+            if ( !is_null($query)) {
+                $this -> query .= $query;
+                
+                return $this;
+            }
+        }
     }

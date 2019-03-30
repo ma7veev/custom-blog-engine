@@ -1,0 +1,14 @@
+{
+    "name": "ma7veev/blog-test",
+    "description": "Native php blog engine",
+    "type": "project",
+    "license": "MIT",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Core\\": "core",
+            "Services\\": "services",
+            "App\\": "app"
+        }
+    }
+}

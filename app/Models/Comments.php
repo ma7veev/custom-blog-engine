@@ -8,6 +8,7 @@
     
     namespace App\Models;
     
-    class Comments
+    class Comments extends Model
     {
+    
     }

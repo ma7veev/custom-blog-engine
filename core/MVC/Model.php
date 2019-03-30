@@ -7,7 +7,21 @@
      */
     
     namespace Core\MVC;
-    
+
+    use Core\Database\DB;
+
     class Model
     {
+        public $instance;
+        protected $table_name;
+        
+        public function __construct()
+        {
+            $this->instance = new DB($this -> table_name);
+        }
+    
+        public function init()
+        {
+        
+        }
     }

@@ -15,8 +15,9 @@
     {
         private $connection;
         private $query = '';
+        public $table;
         
-        public function __construct()
+        public function __construct($table_name)
         {
             $config = Config ::getDb();
             $connection = new Connection($config);
@@ -24,12 +25,26 @@
                 return false;
             }
             $this -> connection = $connection;
+            $this -> setTableName($table_name);
         }
         
-        public function select($columns, $table)
+        public function select($columns)
         {
+            
             if (is_array($columns)) {
-                $this -> query = 'SELECT '.implode(', ', $columns).' FROM '.$table;
+                $this -> query = 'SELECT '.implode(', ',
+                            $columns).' FROM '.$this -> table;
+                
+                return $this;
+            }
+        }
+        
+        public function insert($data)
+        {
+            if (is_array($data)) {
+                $this -> query = "INSERT INTO {$this -> table} (".implode(", ",
+                            array_keys($data)).") VALUES ('".implode("', '",
+                            array_values($data))."')";
                 
                 return $this;
             }
@@ -48,20 +63,51 @@
             }
         }
         
+        public function limit($number)
+        {
+            $this -> addRaw(" LIMIT $number");
+            
+            return $this;
+        }
+        
+        public function where($conditions)
+        {
+            if (is_array($conditions)) {
+                //   var_dump($conditions);
+                $this -> addRaw(" where");
+                foreach ($conditions as $key => $cond) {
+                    $i = 1;
+                    $this -> addRaw(" $key=$cond");
+                    if ($i != count($conditions)) {
+                        $this -> addRaw(" AND ");
+                    }
+                    $i++;
+                }
+            }
+            
+            return $this;
+        }
+        
         public function raw($query)
         {
             if ( !is_null($query)) {
                 $this -> query = $query;
-                
-                return $this;
             }
+            
+            return $this;
         }
+        
         public function addRaw($query)
         {
             if ( !is_null($query)) {
                 $this -> query .= $query;
-                
-                return $this;
             }
+            
+            return $this;
+        }
+        
+        private function setTableName($table_name)
+        {
+            $this -> table = $table_name;
         }
     }

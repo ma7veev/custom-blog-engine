@@ -74,7 +74,7 @@
         {
             if ( !is_null($this -> pdo)) {
                 try {
-                    return $this -> pdo -> query($sql, PDO::FETCH_ASSOC);
+                    return $this -> pdo -> query($sql, PDO::FETCH_ASSOC)->fetchALL(PDO::FETCH_ASSOC);
                 } catch (PDOException $e) {
                     if ($this -> main_config[ 'pdo_errors' ]) {
                         echo $e -> getmessage();

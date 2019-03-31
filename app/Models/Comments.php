@@ -37,7 +37,7 @@
         
         public function createOne($data)
         {
-            $commit = $this -> instance -> insert($data) -> exe();
+            $commit = $this -> instance -> insert(self::escapeHtml($data)) -> exe();
             
             return $commit -> success;
         }

@@ -19,7 +19,6 @@
             $database = new DB;
             $test = $database -> select(['test', 'tes12'], 'test') -> exe();
             
-            //   var_dump($test);
             return self ::view('index', ['test' => $test]);
         }
         
@@ -38,7 +37,7 @@
                 $create = $comments_model  -> createOne($request -> data);
                 if ($create) {
                     $last_record = $comments_model ->clearInstance()-> getLastOne();
-                   //  var_dump($last_record);
+                  
                     return Response ::redirect('/view-record',
                           ['id' => $last_record[ 'record_id' ]]);
                 } else {

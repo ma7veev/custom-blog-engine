@@ -17,7 +17,6 @@
         
         private function renderHtml()
         {
-            //   var_dump(self::VIEWS_PATH.$this -> layout.'.php');
             $content = $this -> renderContext();
             $html = require_once(ROOT_PATH.self::VIEWS_PATH.$this -> layout.'.php');
             

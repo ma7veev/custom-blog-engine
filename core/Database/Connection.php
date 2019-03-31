@@ -76,21 +76,16 @@
         {
             if ( !is_null($this -> pdo)) {
                 try {
-                    //   return $this -> pdo -> query($sql, PDO::FETCH_ASSOC)->fetchALL(PDO::FETCH_ASSOC);
-                    if(empty($params)) {
-                       // var_dump($sql,$params);
-                      //  echo 'true';
-                        $res = $this -> pdo -> query($sql, PDO::FETCH_ASSOC)->fetchALL(PDO::FETCH_ASSOC);
-                      //  var_dump($sql,$res);
+                    if (empty($params)) {
+                        $res = $this -> pdo -> query($sql, PDO::FETCH_ASSOC)
+                                            -> fetchALL(PDO::FETCH_ASSOC);
+                        
                         return $res;
                     }
                     $statement = $this -> pdo -> prepare($sql);
                     $statement -> execute($params);
                     $result = $statement -> fetchAll(PDO::FETCH_ASSOC);
-                    if(empty($result)){
-    
-                     //   var_dump($sql,$params,$statement -> execute($params),$result);
-                    }
+                    
                     return $result;
                 } catch (PDOException $e) {
                     if ($this -> main_config[ 'pdo_errors' ]) {

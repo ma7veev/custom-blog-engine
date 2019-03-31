@@ -20,6 +20,7 @@
             $comments_model = new Comments;
             /*get list of comment`s frequency by records*/
             $comments_freq = $comments_model -> getCommentsFrequecy();
+          
             /*get 5 most popular record`s ids*/
             $most_freq_ids=array_keys(array_slice($comments_freq, 0, 5, true));
        
@@ -27,7 +28,7 @@
           
             $popular_records = $records_model -> getByIds($most_freq_ids);
             $last_records = $records_model ->clearInstance()-> getLast();
-            
+          
             return self ::view('index',
                   [
                         'comments_freq'=>$comments_freq,
@@ -43,6 +44,10 @@
                 $id = $request -> prop('id');
                 $records_model = new Records;
                 $record = $records_model -> getOne($id);
+                if(!$record){
+                    return Response ::redirect('/',
+                          null, 'This post doesn`t exist');
+                }
                 $comments_model = new Comments;
                 $comments_list = $comments_model -> getByRecord($id);
             } else {

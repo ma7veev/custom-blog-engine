@@ -6,14 +6,15 @@
     <?= $record[ 'text' ]; ?>
 </div>
 <?php if ( !empty($comments_list)): ?>
-<h2 class="mt-3">Comments</h2>
+   <hr>
+<h3 class="mt-3">Comments</h3>
 <?php else: ?>
    <div class="alert alert-info mt-4" role="alert">
       <p>There is no comments yet. You can add one with submitting form below.</p>
    </div>
    
 <?php endif; ?>
-<h4 class="mt-3">Add comment:</h4>
+<h5 class="mt-3">Add a comment:</h5>
 <div class="mt-3">
    <?php require_once ('_comment-form.php'); ?>
 </div>

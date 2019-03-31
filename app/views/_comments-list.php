@@ -1,5 +1,6 @@
 <?php if ( !empty($comments_list)): ?>
-    <h4>Users comments:</h4>
+   <hr>
+    <h5>Users comments:</h5>
     <?php foreach ($comments_list as $comment): ?>
 
    <blockquote class="blockquote">

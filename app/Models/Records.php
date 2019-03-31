@@ -17,17 +17,39 @@
         public function rules()
         {
             return [
-                  ['author_name', 'required' => true, 'type'=>'string', 'min'=>2, 'max'=>255],
-                  ['title', 'required' => true, 'type'=>'string', 'min'=>3, 'max'=>255],
-                  ['text', 'required' => true, 'type'=>'string', 'min'=>12, 'max'=>65535],
+                  [
+                        'author_name',
+                        'required' => true,
+                        'type'     => 'string',
+                        'min'      => 2,
+                        'max'      => 255,
+                  ],
+                  [
+                        'title',
+                        'required' => true,
+                        'type'     => 'string',
+                        'min'      => 3,
+                        'max'      => 255,
+                  ],
+                  [
+                        'text',
+                        'required' => true,
+                        'type'     => 'string',
+                        'min'      => 12,
+                        'max'      => 65535,
+                  ],
             ];
         }
         
         public function getLast()
         {
-            $commit = $this -> instance -> select(['id', 'author_name', 'title', 'text', 'created_at'])
-                                        -> orderBy('created_at', 'desc')
-                                        -> exe();
+            $commit = $this -> instance -> select([
+                  'id',
+                  'author_name',
+                  'title',
+                  'text',
+                  'created_at',
+            ]) -> orderBy('created_at', 'desc') -> exe();
             if ($commit -> success) {
                 return $commit -> data;
             }
@@ -35,18 +57,29 @@
         
         public function getByIds($ids)
         {
-            $commit = $this -> instance -> select(['id', 'author_name', 'title', 'text', 'created_at']) -> whereIn('id', $ids) -> exe();
-            if ($commit -> success) {
-                return $commit -> data;
+            if (is_array($ids) && !empty($ids)) {
+                $commit = $this -> instance -> select([
+                      'id',
+                      'author_name',
+                      'title',
+                      'text',
+                      'created_at',
+                ]) -> whereIn('id', $ids) -> exe();
+                if ($commit -> success) {
+                    return $commit -> data;
+                }
             }
         }
         
         public function getLastOne()
         {
-            $commit = $this -> instance -> select(['id', 'author_name', 'title', 'text', 'created_at'])
-                                        -> orderBy('id', 'desc')
-                                        -> limit(1)
-                                        -> exe();
+            $commit = $this -> instance -> select([
+                  'id',
+                  'author_name',
+                  'title',
+                  'text',
+                  'created_at',
+            ]) -> orderBy('id', 'desc') -> limit(1) -> exe();
             if ($commit -> success) {
                 return current($commit -> data);
             }
@@ -62,7 +95,7 @@
         
         public function createOne($data)
         {
-            $commit = $this -> instance -> insert($data) -> exe();
+            $commit = $this -> instance -> insert(self::escapeHtml($data)) -> exe();
             
             return $commit -> success;
         }

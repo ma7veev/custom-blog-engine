@@ -34,6 +34,8 @@
    </div>
     <?= $content; ?>
    <footer class="blog-footer">
+      <p>Created by <a href="https://github.com/ma7veev/" target="_blank">Matveev Sergey</a>.</p>
+      
    </footer>
    <!-- Bootstrap core JavaScript
        ================================================== -->

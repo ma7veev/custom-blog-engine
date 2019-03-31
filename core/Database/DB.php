@@ -75,10 +75,9 @@
         
         public function exe()
         {
-            //    var_dump($this -> query);
             if ( !is_null($this -> query)) {
                 $resultPDO = $this -> connection -> makeQuery($this -> query, $this->real_params);
-             //  var_dump($resultPDO);
+            
                 if (is_array($resultPDO)) {
                     $this -> success = true;
                     $this -> data = $resultPDO;
@@ -98,7 +97,6 @@
         public function where($conditions)
         {
             if (is_array($conditions)) {
-                //   var_dump($conditions);
                 $this -> addRaw(" where");
                 foreach ($this->escapeParams($conditions) as $key => $cond) {
                     $i = 1;
@@ -149,7 +147,6 @@
         private function escapeParams($value)
         {
             if (is_array($value)) {
-             //   var_dump('!!', $value);
                 $this -> real_params = array_values(array_merge($this -> real_params, $value));
                 $replaced_arr = array_map(function ($val) {
                     return '?';
@@ -158,7 +155,6 @@
                 
                 return $replaced_arr;
             } else {
-              //  var_dump('!!!', $value);
                 $this -> real_params[] =$value;
                 
                 return '?';

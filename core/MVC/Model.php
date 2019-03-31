@@ -31,14 +31,12 @@
         public function validate($data)
         {
             foreach ($this -> rules() as $rule) {
-                //  var_dump($data[ current($rule)]);
                 if ( !isset($data[ current($rule) ])) {
                     return [
                           'validate' => false,
                           'error'    => 'Wrong data in '.current($rule).' field',
                     ];
                 }
-                //  var_dump($rule['required'], $data[ current($rule) ]);
                 if ($rule[ 'required' ] && $data[ current($rule) ] == '') {
                     return [
                           'validate' => false,
@@ -46,9 +44,7 @@
                     ];
                 }
                 if ($rule[ 'type' ] == 'string') {
-                 //   var_dump('!',$rule[ 'min' ],strlen($data[ current($rule) ]));
                     if (isset($rule[ 'min' ])&&$rule[ 'min' ]>strlen($data[ current($rule) ])) {
-                    //    var_dump('!!');
                         return [
                               'validate' => false,
                               'error'    => 'Your '.current($rule).' field must contain min '.$rule[ 'min' ].' symbols',
@@ -64,5 +60,15 @@
             }
             
             return ['validate' => true];
+        }
+        public static function escapeHtml($array){
+            if(is_array($array)){
+                $escaped = array_map(function ($val) {
+                    return htmlentities($val);
+                },
+                      $array);
+                return $escaped;
+            }
+            return $array;
         }
     }

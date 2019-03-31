@@ -2,9 +2,9 @@
    
    function requirements(){
    
-      if (version_compare(PHP_VERSION, '5.6.4') < 0){
+      if (version_compare(PHP_VERSION, '7.1.0') < 0){
         
-         throw new Exception('You have to upgrade your PHP version to 5.6 +');
+         throw new Exception('You have to upgrade your PHP version to 7.1.0 +');
       }
      
    }

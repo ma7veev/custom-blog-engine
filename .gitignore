@@ -34,4 +34,4 @@ phpunit.phar
 node_modules
 node_modules/*
 gulpfile.js
-
+package-lock.json

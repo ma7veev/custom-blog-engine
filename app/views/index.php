@@ -13,6 +13,7 @@
                 <div class="carousel-caption text-left">
                    <h1><?= $record[ 'title' ]; ?></h1>
                    <strong class="d-inline-block mb-2 text-primary"><?= $record[ 'author_name' ]; ?></strong>
+                   <div><?= HData::issetCount($comments_freq, $record[ 'id' ]) ?> comments</div>
                    <p><?= substr($record[ 'text' ], 0, 100); ?>...</p>
                    <p>
                       <a class="btn btn-lg btn-primary" href="/view-record?id=<?= $record[ 'id' ]; ?>" role="button">More
@@ -25,7 +26,7 @@
    </div>
 <?php endif; ?>
 <div class="mt-3 mb-4">
-   <h2>Add new record:</h2>
+   <h2>Add a new record:</h2>
     <?php require_once('_record-form.php'); ?>
 </div>
 <?php if ( !empty($last_records)): ?>

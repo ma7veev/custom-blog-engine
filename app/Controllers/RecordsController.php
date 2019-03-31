@@ -44,10 +44,9 @@
                 $records_model = new Records;
                 $record = $records_model -> getOne($id);
                 $comments_model = new Comments;
-            //    $comments_model -> create();
                 $comments_list = $comments_model -> getByRecord($id);
             } else {
-                /*bad response*/
+                return Response ::redirect('/');
             }
             
             return self ::view('view-record',

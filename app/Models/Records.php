@@ -16,14 +16,37 @@
         
         public function getLast()
         {
-            return $this -> instance -> select(['*']) -> limit(5) -> exe();
+            $commit = $this -> instance -> select(['*']) -> limit(5) -> exe();
+            if($commit->success){
+                return $commit -> data;
+            }
+        }
+        
+        public function getLastOne()
+        {
+            $commit = $this -> instance -> select(['*'])
+                                        -> orderBy('id', 'desc')
+                                        -> limit(1)
+                                        -> exe();
+            if ($commit -> success) {
+                return current($commit -> data);
+            }
         }
         
         public function getOne($id)
         {
-            return current($this -> instance -> select(['*'])
-                                             -> where(['id' => $id])
-                                             -> exe());
+            $commit = $this -> instance -> select(['*']) -> where(['id' => $id]) -> exe();
+           
+            if ($commit -> success) {
+                return current($commit -> data);
+            }
+        }
+        
+        public function createOne($data)
+        {
+            $commit = $this -> instance -> insert($data) -> exe();
+            
+            return $commit -> success;
         }
         
         public function create()

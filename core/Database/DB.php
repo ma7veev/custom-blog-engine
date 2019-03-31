@@ -16,6 +16,8 @@
         private $connection;
         private $query = '';
         public $table;
+        public $success=false;
+        public $data=[];
         
         public function __construct($table_name)
         {
@@ -34,9 +36,9 @@
             if (is_array($columns)) {
                 $this -> query = 'SELECT '.implode(', ',
                             $columns).' FROM '.$this -> table;
-                
-                return $this;
             }
+            
+            return $this;
         }
         
         public function insert($data)
@@ -45,9 +47,22 @@
                 $this -> query = "INSERT INTO {$this -> table} (".implode(", ",
                             array_keys($data)).") VALUES ('".implode("', '",
                             array_values($data))."')";
-                
-                return $this;
             }
+            
+            return $this;
+        }
+        
+        public function orderBy($field, $type = null)
+        {
+            $this -> addRaw(" ORDER BY $field");
+            if ( !is_null($type)) {
+                
+                $this -> addRaw(" $type");
+            } else {
+                $this -> addRaw(" ASC");
+            }
+            
+            return $this;
         }
         
         public function exe()
@@ -55,12 +70,13 @@
             var_dump($this -> query);
             if ( !is_null($this -> query)) {
                 $resultPDO = $this -> connection -> makeQuery($this -> query);
-                if ($resultPDO) {
-                    return $resultPDO;
+                if (is_array($resultPDO)) {
+                    $this->success = true;
+                    $this->data = $resultPDO;
                 }
                 
-                return [];
             }
+            return $this;
         }
         
         public function limit($number)

@@ -5,3 +5,6 @@
    </p>
     <?= $record[ 'text' ]; ?>
 </div>
+<div class="mt-5">
+   <?php require_once ('_comment-form.php'); ?>
+</div>

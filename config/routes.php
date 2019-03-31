@@ -4,7 +4,7 @@
           '/'              => 'RecordsController@last',
           'view-record'    => 'RecordsController@viewOne',
           'add-record'     => 'RecordsController@addNew',
-          'sumbit-record'  => 'RecodsController@submitNew',
+          'submit-record'  => 'RecordsController@submitNew',
           'add-comment'    => 'CommentsController@addNew',
           'submit-comment' => 'CommentsController@submitNew',
     ];

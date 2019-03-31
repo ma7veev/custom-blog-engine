@@ -47,6 +47,7 @@
             $session = new Session(true);
             $session -> start();
             $method_name = $this -> routes_list[ $this -> request_uri ];
+            
             if (is_null($method_name)) {
                 if ( !$this -> main_config[ 'http_errors' ]) {
                    

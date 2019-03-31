@@ -22,12 +22,12 @@
             $session = new Session(true);
             if ( !empty($_GET)) {
                 $this -> isGet = true;
-                $this -> get = (object)$_GET;
+                $this -> get = $_GET;
                 $this -> data = $this -> get;
             }
             if ( !empty($_POST)) {
                 $this -> isPost = true;
-                $this -> post = (object)$_POST;
+                $this -> post = $_POST;
                 $this -> data = $this -> post;
             }
             $this -> session = $session -> getData();
@@ -35,10 +35,10 @@
         
         public function has($property)
         {
-            if ($this -> isPost && property_exists($this -> post, $property)) {
+            if ($this -> isPost && isset($this -> post[$property])) {
                 return true;
             }
-            if ($this -> isGet && property_exists($this -> get, $property)) {
+            if ($this -> isGet && isset($this -> get[$property])) {
                 
                 return true;
             }
@@ -49,7 +49,7 @@
         public function prop($property)
         {
             if ($this -> has($property)) {
-                return $this -> data ->{$property};
+                return $this -> data [$property];
             }
             
             return null;

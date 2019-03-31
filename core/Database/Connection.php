@@ -39,9 +39,11 @@
             ];
             try {
                 $pdo = new PDO($dsn, $this -> user, $this -> pass, $opt);
+                $pdo -> setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+                //  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (PDOException $e) {
                 if ($this -> main_config[ 'pdo_errors' ]) {
-                    echo $e -> getmessage();
+                    echo $e -> getmessage().$this -> pdo -> errorInfo();
                 }
                 
                 return false;
@@ -70,15 +72,31 @@
             }
         }
         
-        public function makeQuery($sql)
+        public function makeQuery($sql, $params)
         {
             if ( !is_null($this -> pdo)) {
                 try {
-                    return $this -> pdo -> query($sql, PDO::FETCH_ASSOC)->fetchALL(PDO::FETCH_ASSOC);
+                    //   return $this -> pdo -> query($sql, PDO::FETCH_ASSOC)->fetchALL(PDO::FETCH_ASSOC);
+                    if(empty($params)) {
+                       // var_dump($sql,$params);
+                      //  echo 'true';
+                        $res = $this -> pdo -> query($sql, PDO::FETCH_ASSOC)->fetchALL(PDO::FETCH_ASSOC);
+                      //  var_dump($sql,$res);
+                        return $res;
+                    }
+                    $statement = $this -> pdo -> prepare($sql);
+                    $statement -> execute($params);
+                    $result = $statement -> fetchAll(PDO::FETCH_ASSOC);
+                    if(empty($result)){
+    
+                     //   var_dump($sql,$params,$statement -> execute($params),$result);
+                    }
+                    return $result;
                 } catch (PDOException $e) {
                     if ($this -> main_config[ 'pdo_errors' ]) {
                         echo $e -> getmessage();
                     }
+                    
                     return false;
                 }
             }

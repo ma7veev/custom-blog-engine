@@ -35,10 +35,10 @@
                           null, $validation['error']);
         
                 }
-                $create = $comments_model -> createOne($request -> data);
+                $create = $comments_model  -> createOne($request -> data);
                 if ($create) {
-                    $last_record = $comments_model -> getLastOne();
-            
+                    $last_record = $comments_model ->clearInstance()-> getLastOne();
+                   //  var_dump($last_record);
                     return Response ::redirect('/view-record',
                           ['id' => $last_record[ 'record_id' ]]);
                 } else {

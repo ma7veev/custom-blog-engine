@@ -15,7 +15,7 @@
                    <strong class="d-inline-block mb-2 text-primary"><?= $record[ 'author_name' ]; ?></strong>
                    <p><?= substr($record[ 'text' ], 0, 100); ?>...</p>
                    <p>
-                      <a class="btn btn-lg btn-primary" href="#" role="button">More
+                      <a class="btn btn-lg btn-primary" href="/view-record?id=<?= $record[ 'id' ]; ?>" role="button">More
                       </a>
                    </p>
                 </div>

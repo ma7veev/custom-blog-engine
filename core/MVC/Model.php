@@ -24,7 +24,10 @@
         {
         
         }
-        
+        public function clearInstance(){
+            $this -> instance = new DB($this -> table_name);
+            return $this;
+        }
         public function validate($data)
         {
             foreach ($this -> rules() as $rule) {

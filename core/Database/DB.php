@@ -46,8 +46,8 @@
         {
             if (is_array($data)) {
                 $this -> query = "INSERT INTO {$this -> table} (".implode(", ",
-                            array_keys($data)).") VALUES ('".implode("', '",
-                            array_values($data))."')";
+                            array_keys($data)).") VALUES (".implode(", ",
+                            array_values($this->escapeParams($data))).")";
             }
             
             return $this;
@@ -77,7 +77,8 @@
         {
             //    var_dump($this -> query);
             if ( !is_null($this -> query)) {
-                $resultPDO = $this -> connection -> makeQuery($this -> query);
+                $resultPDO = $this -> connection -> makeQuery($this -> query, $this->real_params);
+             //  var_dump($resultPDO);
                 if (is_array($resultPDO)) {
                     $this -> success = true;
                     $this -> data = $resultPDO;
@@ -99,7 +100,7 @@
             if (is_array($conditions)) {
                 //   var_dump($conditions);
                 $this -> addRaw(" where");
-                foreach ($conditions as $key => $cond) {
+                foreach ($this->escapeParams($conditions) as $key => $cond) {
                     $i = 1;
                     $this -> addRaw(" $key=$cond");
                     if ($i != count($conditions)) {
@@ -115,8 +116,8 @@
         public function whereIn($field, $values)
         {
             if (is_array($values)) {
-                $this -> addRaw(" where $field IN ('".implode("', '",
-                            array_values($values))."')");
+                $this -> addRaw(" where $field IN (".implode(", ",
+                            array_values($this->escapeParams($values))).")");
             }
             
             return $this;
@@ -148,7 +149,8 @@
         private function escapeParams($value)
         {
             if (is_array($value)) {
-                $this -> real_params = array_merge($this -> real_params, $value);
+             //   var_dump('!!', $value);
+                $this -> real_params = array_values(array_merge($this -> real_params, $value));
                 $replaced_arr = array_map(function ($val) {
                     return '?';
                 },
@@ -156,7 +158,8 @@
                 
                 return $replaced_arr;
             } else {
-                $this -> real_params[ $value ];
+              //  var_dump('!!!', $value);
+                $this -> real_params[] =$value;
                 
                 return '?';
             }

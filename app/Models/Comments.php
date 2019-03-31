@@ -44,7 +44,7 @@
         
         public function getLastOne()
         {
-            $commit = $this -> instance -> select(['*'])
+            $commit = $this -> instance -> select(['record_id', 'text', 'author_name'])
                                         -> orderBy('id', 'desc')
                                         -> limit(1)
                                         -> exe();
@@ -55,8 +55,9 @@
         
         public function getByRecord($id)
         {
-            $commit = $this -> instance -> select(['*'])
+            $commit = $this -> instance -> select(['record_id', 'text', 'author_name'])
                                         -> where(['record_id' => $id])
+                                         -> orderBy('created_at', 'desc')
                                         -> exe();
             if ($commit -> success) {
                 return $commit -> data;

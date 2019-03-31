@@ -25,7 +25,7 @@
         
         public function getLast()
         {
-            $commit = $this -> instance -> select(['*'])
+            $commit = $this -> instance -> select(['id', 'author_name', 'title', 'text', 'created_at'])
                                         -> orderBy('created_at', 'desc')
                                         -> exe();
             if ($commit -> success) {
@@ -35,7 +35,7 @@
         
         public function getByIds($ids)
         {
-            $commit = $this -> instance -> select(['*']) -> whereIn('id', $ids) -> exe();
+            $commit = $this -> instance -> select(['id', 'author_name', 'title', 'text', 'created_at']) -> whereIn('id', $ids) -> exe();
             if ($commit -> success) {
                 return $commit -> data;
             }
@@ -43,7 +43,7 @@
         
         public function getLastOne()
         {
-            $commit = $this -> instance -> select(['*'])
+            $commit = $this -> instance -> select(['id', 'author_name', 'title', 'text', 'created_at'])
                                         -> orderBy('id', 'desc')
                                         -> limit(1)
                                         -> exe();

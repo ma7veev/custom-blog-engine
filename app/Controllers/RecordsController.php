@@ -26,7 +26,7 @@
             $records_model = new Records;
           
             $popular_records = $records_model -> getByIds($most_freq_ids);
-            $last_records = $records_model -> getLast();
+            $last_records = $records_model ->clearInstance()-> getLast();
             
             return self ::view('index',
                   [
@@ -44,7 +44,7 @@
                 $records_model = new Records;
                 $record = $records_model -> getOne($id);
                 $comments_model = new Comments;
-                $comments_model -> create();
+            //    $comments_model -> create();
                 $comments_list = $comments_model -> getByRecord($id);
             } else {
                 /*bad response*/
@@ -68,7 +68,7 @@
                 }
                 $create = $records_model -> createOne($request -> data);
                 if ($create) {
-                    $last_record = $records_model -> getLastOne();
+                    $last_record = $records_model ->clearInstance()-> getLastOne();
                     
                     return Response ::redirect('/view-record',
                           ['id' => $last_record[ 'id' ]]);

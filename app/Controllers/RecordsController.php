@@ -2,6 +2,7 @@
     
     namespace App\Controllers;
     
+    use App\Models\Comments;
     use Core\MVC\View;
     use Core\Server\Request;
     use Core\Server\Response;
@@ -30,11 +31,15 @@
                 $id = $request -> prop('id');
                 $records_model = new Records;
                 $record = $records_model -> getOne($id);
+                $comments_model = new Comments;
+                $comments_model->create();
+                $comments_list = $comments_model -> getByRecord($id);
+                
             } else {
                 /*bad response*/
             }
-            
-            return self ::view('view-record', ['record' => $record]);
+            return self ::view('view-record',
+                  ['record' => $record, 'comments_list' => $comments_list]);
         }
         
         public function addNew()

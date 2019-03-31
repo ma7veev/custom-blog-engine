@@ -5,6 +5,6 @@
           'view-record'    => 'RecordsController@viewOne',
           'add-record'     => 'RecordsController@addNew',
           'submit-record'  => 'RecordsController@submitNew',
-          'add-comment'    => 'CommentsController@addNew',
+         // 'add-comment'    => 'CommentsController@addNew',
           'submit-comment' => 'CommentsController@submitNew',
     ];

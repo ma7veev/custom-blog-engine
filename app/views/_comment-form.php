@@ -1,5 +1,5 @@
 <form action="/submit-comment" method="POST">
-   
+   <input type="hidden" value="<?= $record[ 'id' ]; ?>" name="record_id">
    <div class="form-group">
       <label for="author_name">Ваше имя:</label>
       <input name="author_name" type="text" class="form-control">

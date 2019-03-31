@@ -67,7 +67,7 @@
         
         public function exe()
         {
-            var_dump($this -> query);
+         //  var_dump($this -> query);
             if ( !is_null($this -> query)) {
                 $resultPDO = $this -> connection -> makeQuery($this -> query);
                 if (is_array($resultPDO)) {

@@ -9,7 +9,7 @@
    </div>
    <div class="form-group">
       <label for="text">Текст:</label>
-      <input name="text" type="textarea" class="form-control">
+      <textarea name="text"  class="form-control"></textarea>
    </div>
    <button class="btn btn-warning" type="submit">Отправить</button>
 </form>

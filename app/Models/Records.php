@@ -16,15 +16,18 @@
         
         public function getLast()
         {
-            $commit = $this -> instance -> select(['*']) -> limit(5) -> exe();
-            if($commit->success){
+            $commit = $this -> instance -> select(['*'])
+                                        -> orderBy('created_at', 'desc')
+                                        -> exe();
+            if ($commit -> success) {
                 return $commit -> data;
             }
         }
+        
         public function getByIds($ids)
         {
-            $commit = $this -> instance -> select(['*']) -> whereIn('id',$ids) -> exe();
-            if($commit->success){
+            $commit = $this -> instance -> select(['*']) -> whereIn('id', $ids) -> exe();
+            if ($commit -> success) {
                 return $commit -> data;
             }
         }
@@ -43,7 +46,6 @@
         public function getOne($id)
         {
             $commit = $this -> instance -> select(['*']) -> where(['id' => $id]) -> exe();
-           
             if ($commit -> success) {
                 return current($commit -> data);
             }
@@ -55,7 +57,7 @@
             
             return $commit -> success;
         }
-       
+        
         public function create()
         {
             /* $i = 1;

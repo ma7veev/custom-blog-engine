@@ -18,16 +18,19 @@
             $request = new Request;
             $test = $request -> prop('test');
             $comments_model = new Comments;
-            $freq_records = $comments_model -> getFrequentRecords(5);
-            $freq_records_ids = array_column($freq_records, 'record_id');
-       //     var_dump($freq_records_ids);
+            /*get list of comment`s frequency by records*/
+            $comments_freq = $comments_model -> getCommentsFrequecy();
+            /*get 5 most popular record`s ids*/
+            $most_freq_ids=array_keys(array_slice($comments_freq, 0, 5, true));
+       
             $records_model = new Records;
-            //   $records -> create();
-            $popular_records = $records_model -> getByIds($freq_records_ids);
+          
+            $popular_records = $records_model -> getByIds($most_freq_ids);
             $last_records = $records_model -> getLast();
             
             return self ::view('index',
                   [
+                        'comments_freq'=>$comments_freq,
                         'popular_records' => $popular_records,
                         'last_records'    => $last_records,
                   ]);

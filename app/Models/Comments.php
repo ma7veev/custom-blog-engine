@@ -42,14 +42,18 @@
                 return $commit -> data;
             }
         }
-        public function getFrequentRecords($limit){
+        public function getCommentsFrequecy(){
             $commit = $this -> instance -> select(['`record_id`', 'COUNT(`record_id`) AS `record_freq`'])
                                         -> groupBy('record_id')
                                         -> orderBy('record_freq', 'desc')
-                                        -> limit($limit)
                                         -> exe();
             if ($commit -> success) {
-                return $commit -> data;
+                $customize_data = [];
+                foreach ($commit -> data as $item){
+                    $customize_data[$item['record_id']]=$item['record_freq'];
+                }
+              //  return $commit -> data;
+                return $customize_data;
             }
         }
         public function create()

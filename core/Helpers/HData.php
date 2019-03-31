@@ -8,12 +8,21 @@
     
     namespace Core\Helpers;
     
-    class Data
+    class HData
     {
         public static function formatDate($string, $format)
         {
             $date = new \DateTime;
             
             return $date -> format($format);
+        }
+        
+        public static function issetCount($arr, $key)
+        {
+            if (isset($arr[ $key ])) {
+                return $arr[ $key ];
+            }
+            
+            return '0';
         }
     }

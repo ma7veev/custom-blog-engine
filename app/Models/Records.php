@@ -21,6 +21,13 @@
                 return $commit -> data;
             }
         }
+        public function getByIds($ids)
+        {
+            $commit = $this -> instance -> select(['*']) -> whereIn('id',$ids) -> exe();
+            if($commit->success){
+                return $commit -> data;
+            }
+        }
         
         public function getLastOne()
         {
@@ -48,7 +55,7 @@
             
             return $commit -> success;
         }
-        
+       
         public function create()
         {
             /* $i = 1;

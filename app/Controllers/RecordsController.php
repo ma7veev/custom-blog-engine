@@ -17,11 +17,20 @@
         {
             $request = new Request;
             $test = $request -> prop('test');
+            $comments_model = new Comments;
+            $freq_records = $comments_model -> getFrequentRecords(5);
+            $freq_records_ids = array_column($freq_records, 'record_id');
+       //     var_dump($freq_records_ids);
             $records_model = new Records;
             //   $records -> create();
-            $records = $records_model -> getLast();
+            $popular_records = $records_model -> getByIds($freq_records_ids);
+            $last_records = $records_model -> getLast();
             
-            return self ::view('index', ['records' => $records]);
+            return self ::view('index',
+                  [
+                        'popular_records' => $popular_records,
+                        'last_records'    => $last_records,
+                  ]);
         }
         
         public function viewOne()
@@ -32,12 +41,12 @@
                 $records_model = new Records;
                 $record = $records_model -> getOne($id);
                 $comments_model = new Comments;
-                $comments_model->create();
+                $comments_model -> create();
                 $comments_list = $comments_model -> getByRecord($id);
-                
             } else {
                 /*bad response*/
             }
+            
             return self ::view('view-record',
                   ['record' => $record, 'comments_list' => $comments_list]);
         }

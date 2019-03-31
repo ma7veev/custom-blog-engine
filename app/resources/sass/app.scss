@@ -6,3 +6,23 @@
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 
+.owl-nav{
+  position: relative;
+  width: 100%;
+  button{
+    position: absolute;
+    bottom: 176px;
+
+    span{
+      font-size: 40px;
+      font-weight: bold;
+      color: white;
+    }
+  }
+  .owl-prev{
+    left: 30px;
+  }
+  .owl-next{
+    right: 30px;
+  }
+}

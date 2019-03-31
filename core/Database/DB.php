@@ -64,10 +64,16 @@
             
             return $this;
         }
+        public function groupBy($field)
+        {
+            $this -> addRaw(" GROUP BY $field");
+            
+            return $this;
+        }
         
         public function exe()
         {
-         //  var_dump($this -> query);
+      //    var_dump($this -> query);
             if ( !is_null($this -> query)) {
                 $resultPDO = $this -> connection -> makeQuery($this -> query);
                 if (is_array($resultPDO)) {
@@ -103,7 +109,13 @@
             
             return $this;
         }
-        
+        public function whereIn($field, $values){
+            if (is_array($values)){
+                $this -> addRaw(" where $field IN ('".implode("', '",
+                            array_values($values))."')");
+            }
+            return $this;
+        }
         public function raw($query)
         {
             if ( !is_null($query)) {

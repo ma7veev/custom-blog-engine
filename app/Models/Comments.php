@@ -42,6 +42,16 @@
                 return $commit -> data;
             }
         }
+        public function getFrequentRecords($limit){
+            $commit = $this -> instance -> select(['`record_id`', 'COUNT(`record_id`) AS `record_freq`'])
+                                        -> groupBy('record_id')
+                                        -> orderBy('record_freq', 'desc')
+                                        -> limit($limit)
+                                        -> exe();
+            if ($commit -> success) {
+                return $commit -> data;
+            }
+        }
         public function create()
         {
             $i = 164;

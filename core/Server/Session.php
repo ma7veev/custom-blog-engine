@@ -17,7 +17,7 @@
         
         public function start()
         {
-            if ( is_null($_SESSION)) {
+            if (is_null($_SESSION)) {
                 session_start();
             }
         }
@@ -25,9 +25,30 @@
         public function getData()
         {
             if ( !empty($_SESSION)) {
-                return (object)$_SESSION;
+                return $_SESSION;
             }
             
-            return (object)[];
+            return [];
+        }
+        
+        public function storeFlash($message)
+        {
+         
+            $_SESSION[ 'flash' ] = $message;
+            $_SESSION[ 'flash_status' ] = 1;
+           
+        }
+        
+        public function checkFlash()
+        {
+            if (isset($_SESSION[ 'flash' ]) && isset($_SESSION[ 'flash_status' ])) {
+               
+                if ($_SESSION[ 'flash_status' ] == 1) {
+                    $_SESSION[ 'flash_status' ] = 0;
+                } elseif ($_SESSION[ 'flash_status' ] == 0) {
+                    unset($_SESSION[ 'flash' ]);
+                    unset($_SESSION[ 'flash_status' ]);
+                }
+            }
         }
     }

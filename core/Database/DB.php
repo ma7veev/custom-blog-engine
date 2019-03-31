@@ -16,8 +16,9 @@
         private $connection;
         private $query = '';
         public $table;
-        public $success=false;
-        public $data=[];
+        public $success = false;
+        public $data = [];
+        public $real_params = [];
         
         public function __construct($table_name)
         {
@@ -64,6 +65,7 @@
             
             return $this;
         }
+        
         public function groupBy($field)
         {
             $this -> addRaw(" GROUP BY $field");
@@ -73,15 +75,15 @@
         
         public function exe()
         {
-      //    var_dump($this -> query);
+            //    var_dump($this -> query);
             if ( !is_null($this -> query)) {
                 $resultPDO = $this -> connection -> makeQuery($this -> query);
                 if (is_array($resultPDO)) {
-                    $this->success = true;
-                    $this->data = $resultPDO;
+                    $this -> success = true;
+                    $this -> data = $resultPDO;
                 }
-                
             }
+            
             return $this;
         }
         
@@ -109,13 +111,17 @@
             
             return $this;
         }
-        public function whereIn($field, $values){
-            if (is_array($values)){
+        
+        public function whereIn($field, $values)
+        {
+            if (is_array($values)) {
                 $this -> addRaw(" where $field IN ('".implode("', '",
                             array_values($values))."')");
             }
+            
             return $this;
         }
+        
         public function raw($query)
         {
             if ( !is_null($query)) {
@@ -137,5 +143,22 @@
         private function setTableName($table_name)
         {
             $this -> table = $table_name;
+        }
+        
+        private function escapeParams($value)
+        {
+            if (is_array($value)) {
+                $this -> real_params = array_merge($this -> real_params, $value);
+                $replaced_arr = array_map(function ($val) {
+                    return '?';
+                },
+                      $value);
+                
+                return $replaced_arr;
+            } else {
+                $this -> real_params[ $value ];
+                
+                return '?';
+            }
         }
     }

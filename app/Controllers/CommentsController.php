@@ -29,6 +29,12 @@
             $request = new Request;
             if ($request -> isPost) {
                 $comments_model = new Comments;
+                $validation = $comments_model->validate($request -> data);
+                if(!$validation['validate']){
+                    return Response ::redirect($request->getReferer(),
+                          null, $validation['error']);
+        
+                }
                 $create = $comments_model -> createOne($request -> data);
                 if ($create) {
                     $last_record = $comments_model -> getLastOne();
@@ -36,7 +42,8 @@
                     return Response ::redirect('/view-record',
                           ['id' => $last_record[ 'record_id' ]]);
                 } else {
-                    /*bad response*/
+                    return Response ::redirect('/',
+                          null, 'Error creating new comment');
                 }
             }
         }

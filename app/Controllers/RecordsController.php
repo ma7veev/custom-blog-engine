@@ -54,16 +54,18 @@
                   ['record' => $record, 'comments_list' => $comments_list]);
         }
         
-        public function addNew()
-        {
-            return self ::view('add-record');
-        }
         
         public function submitNew()
         {
             $request = new Request;
             if ($request -> isPost) {
                 $records_model = new Records;
+                $validation = $records_model->validate($request -> data);
+                if(!$validation['validate']){
+                    return Response ::redirect($request->getReferer(),
+                          null, $validation['error']);
+                    
+                }
                 $create = $records_model -> createOne($request -> data);
                 if ($create) {
                     $last_record = $records_model -> getLastOne();
@@ -71,7 +73,8 @@
                     return Response ::redirect('/view-record',
                           ['id' => $last_record[ 'id' ]]);
                 } else {
-                    /*bad response*/
+                    return Response ::redirect('/',
+                          null, 'Error creating new record');
                 }
             }
         }

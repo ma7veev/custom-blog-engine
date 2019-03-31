@@ -46,6 +46,7 @@
         {
             $session = new Session(true);
             $session -> start();
+            $session->checkFlash();
             $method_name = $this -> routes_list[ $this -> request_uri ];
             
             if (is_null($method_name)) {

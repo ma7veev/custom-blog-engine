@@ -14,6 +14,15 @@
     {
         protected $table_name = 'records';
         
+        public function rules()
+        {
+            return [
+                  ['author_name', 'required' => true, 'type'=>'string', 'min'=>2, 'max'=>255],
+                  ['title', 'required' => true, 'type'=>'string', 'min'=>3, 'max'=>255],
+                  ['text', 'required' => true, 'type'=>'string', 'min'=>12, 'max'=>65535],
+            ];
+        }
+        
         public function getLast()
         {
             $commit = $this -> instance -> select(['*'])
